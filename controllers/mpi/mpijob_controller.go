@@ -300,7 +300,7 @@ func (r *MPIJobReconciler) setupMPILauncher(mpiJob *training.MPIJob, podTemplate
 	}
 
 	// 1. set pod ServiceAccount
-	podTemplateSpec.Spec.ServiceAccountName = mpiJob.Name + launcherSuffix
+	podTemplateSpec.Spec.ServiceAccountName = "mpijob"
 	// 2. append kubectl delivery init container to delivery kubectl binary file to
 	// main containers by shared volume.
 	podTemplateSpec.Spec.InitContainers = append(podTemplateSpec.Spec.InitContainers, corev1.Container{
