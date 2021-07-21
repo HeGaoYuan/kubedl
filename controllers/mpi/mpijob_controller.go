@@ -54,6 +54,8 @@ func init() {
 const (
 	controllerName              = "MPIController"
 	defaultKubectlDeliveryImage = "kubedl/kubectl-delivery:latest"
+	initContainerCpu             = "100m"
+	initContainerMem             = "512Mi"
 )
 
 var (
@@ -313,8 +315,8 @@ func (r *MPIJobReconciler) setupMPILauncher(mpiJob *training.MPIJob, podTemplate
 		},
 		Resources: corev1.ResourceRequirements{
 			Requests: corev1.ResourceList{
-				corev1.ResourceCPU:    resource.MustParse("0"),
-				corev1.ResourceMemory: resource.MustParse("0"),
+				corev1.ResourceCPU:    resource.MustParse(initContainerCpu),
+				corev1.ResourceMemory: resource.MustParse(initContainerMem),
 			},
 		},
 		VolumeMounts: []corev1.VolumeMount{
