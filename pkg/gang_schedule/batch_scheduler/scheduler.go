@@ -18,6 +18,7 @@ package batch_scheduler
 
 import (
 	"context"
+	"volcano.sh/apis/pkg/apis/scheduling/v1beta1"
 
 	"github.com/alibaba/kubedl/apis"
 	"github.com/alibaba/kubedl/pkg/gang_schedule"
@@ -90,10 +91,15 @@ func (kbs *kubeBatchScheduler) CreateGang(job metav1.Object, replicas map[apiv1.
 
 func (kbs *kubeBatchScheduler) BindPodToGang(obj metav1.Object, entity runtime.Object) error {
 	podSpec := obj.(*v1.PodTemplateSpec)
+	podGroup := entity.(*v1beta1.PodGroup)
 	// The newly-created pods should be submitted to target gang scheduler.
 	if podSpec.Spec.SchedulerName == "" || podSpec.Spec.SchedulerName != kbs.Name() {
 		podSpec.Spec.SchedulerName = kbs.Name()
 	}
+	if podSpec.Annotations == nil {
+		podSpec.Annotations = map[string]string{}
+	}
+	podSpec.Annotations[v1alpha1.GroupNameAnnotationKey] = podGroup.GetName()
 	return nil
 }
 

@@ -40,6 +40,7 @@ require (
 	k8s.io/kubernetes v1.18.15
 	k8s.io/utils v0.0.0-20200603063816-c1c6865ac451
 	sigs.k8s.io/controller-runtime v0.6.2
+	volcano.sh/apis v1.3.0-k8s1.18.3-alpha.3
 )
 
 replace (
